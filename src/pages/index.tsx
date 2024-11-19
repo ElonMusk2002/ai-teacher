@@ -64,7 +64,11 @@ export default function Home() {
       }
 
       const data = await response.json();
+      if (typeof data.content !== "string") {
+        throw new Error("Invalid content format: Expected a string");
+      }
       const sanitizedContent = data.content.replace(/[\x00-\x1F\x7F]/g, "");
+
       const content = JSON.parse(sanitizedContent);
 
       const newSession: LearningSession = {
